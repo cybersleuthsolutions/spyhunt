@@ -1,0 +1,244 @@
+1. Clone a repository
+
+If you want to copy a repository to your local machine:
+
+git clone <repository-url>
+
+2. Check the status
+
+To see changes in your working directory (modified, added, or deleted files):
+
+git status
+
+3. Add changes
+
+To stage files that you've modified, added, or deleted:
+
+git add <file>       # Add specific file
+git add .            # Add all changes in the directory
+
+4. Commit changes
+
+To commit the changes you've added to the staging area:
+
+git commit -m "Your commit message"
+
+5. Push changes
+
+After committing, upload the changes to your GitHub repository:
+
+git push origin <branch-name>
+
+6. Pull changes
+
+To get the latest changes from the remote repository:
+
+git pull origin <branch-name>
+
+7. Fetch updates from the remote
+
+Fetch updates from the remote repository without merging them:
+
+git fetch origin
+
+8. View the commit history
+
+To see the commit history:
+
+git log
+
+9. Switch branches
+
+To change branches:
+
+git checkout <branch-name>
+
+Or, to create and switch to a new branch:
+
+git checkout -b <new-branch-name>
+
+10. Merge branches
+
+After switching to the target branch, merge changes from another branch:
+
+git merge <branch-name>
+
+11. Resolve conflicts
+
+If you encounter merge conflicts, you’ll need to resolve them manually, then stage the resolved files:
+
+git add <resolved-file>
+git commit
+
+12. View remote URLs
+
+To see your current remote repository's URL:
+
+git remote -v
+
+13. Set up a new remote repository
+
+If you want to link a local repo to a new GitHub repository:
+
+git remote add origin <repository-url>
+
+14. Push tags
+
+If you create tags for versions or releases, push them to GitHub:
+
+git push origin <tag-name>
+
+15. Sync fork with the upstream repository
+
+If you’ve forked a repository, you can sync it with the original repository:
+
+git remote add upstream <original-repository-url>
+git fetch upstream
+git checkout main
+git merge upstream/main
+
+These commands are the basics you’ll need to sync, manage, and push your code to GitHub via the terminal. Let me know if you need further details on any of these!
+You said:
+Fork
+ChatGPT said:
+ChatGPT
+
+When you fork a repository, you create a personal copy of someone else’s repository under your own GitHub account. This allows you to freely experiment with changes without affecting the original project.
+Forking a Repository on GitHub
+
+    Go to the repository you want to fork.
+    In the top-right corner, click the Fork button.
+    Select your GitHub account as the destination for the fork.
+
+Once forked, you will have your own version of the repository under your GitHub account.
+Using Forks Locally
+
+After forking a repo, you typically want to sync changes from the original repository (upstream) to your fork. Here's how you can set up and manage the fork locally using the terminal:
+1. Clone Your Fork to Your Local Machine
+
+You can clone your forked repository just like any other repository:
+
+git clone https://github.com/your-username/forked-repo.git
+cd forked-repo
+
+2. Set Up the Original Repository as an Upstream Remote
+
+To keep your fork updated with the changes from the original repository, you'll need to add the original repository (often called upstream) as a remote:
+
+git remote add upstream https://github.com/original-owner/repo.git
+
+3. Fetch Changes from Upstream
+
+To get the latest changes from the original repository:
+
+git fetch upstream
+
+This fetches updates from the upstream repository without merging them into your local branch yet.
+4. Sync Your Fork with Upstream
+
+After fetching, you’ll want to update your local main branch with the latest changes from the upstream repository:
+
+git checkout main              # Switch to your main branch
+git merge upstream/main         # Merge the upstream changes into your main branch
+
+Alternatively, if you want to rebase your changes on top of the upstream:
+
+git checkout main
+git rebase upstream/main
+
+5. Push Updates to Your Fork on GitHub
+
+Once you’ve merged or rebased the upstream changes, push them to your forked repository on GitHub:
+
+git push origin main
+
+6. Creating a Pull Request
+
+After making changes to your fork, you might want to propose those changes to the original repository (this is called creating a pull request). Here’s how to do it:
+
+    Push your changes to your fork (as shown above).
+    Go to the original repository on GitHub.
+    You should see a notification saying "Compare & pull request."
+    Click on "Compare & pull request" to open the pull request page.
+    Add a description and submit your pull request!
+
+Fork Workflow Summary
+
+    Fork the repo on GitHub.
+    Clone your fork to your local machine.
+    Add upstream to keep track of the original repository.
+    Fetch changes from upstream to sync your fork.
+    Merge or rebase changes from upstream into your local branches.
+    Push those changes to your fork on GitHub.
+    Create a pull request to suggest changes to the original repository.
+
+Let me know if you need more details about any of the steps!
+You said:
+I need to confrim myself before I can make changes how do i do this.
+ChatGPT said:
+ChatGPT
+
+It sounds like you're being prompted for authentication or confirmation before you can make changes to the repository, such as pushing commits or performing other operations that require access. There are a few different ways to confirm your identity, depending on whether you're using HTTPS or SSH to interact with GitHub.
+
+Here’s how to handle the authentication:
+1. Using HTTPS (Username and Password)
+
+If you're using HTTPS for your repository and it's asking for authentication, it typically requires your GitHub username and personal access token (PAT) (instead of your GitHub password).
+Steps to authenticate using HTTPS:
+
+    Generate a Personal Access Token (PAT) (if you haven't already):
+        Go to your GitHub account and navigate to Settings.
+        In the left sidebar, select Developer settings > Personal access tokens.
+        Click Generate new token.
+        Give the token a name, and select the appropriate scopes (permissions). If you're just pushing and pulling code, select repo.
+        Click Generate token, and copy it (you won’t be able to see it again).
+
+    Using your username and PAT: When prompted for authentication in the terminal, enter your GitHub username and paste the token in place of your password.
+
+Example:
+
+Username: your-github-username
+Password: <your-generated-PAT-token>
+
+2. Using SSH (Key-based Authentication)
+
+If you're using SSH to authenticate (which is more secure and doesn't require you to enter your credentials every time), you'll need to set up your SSH keys and add the public key to your GitHub account.
+Steps to authenticate using SSH:
+
+    Generate SSH keys (if you don't have them already):
+        Open your terminal and run:
+
+    ssh-keygen -t rsa -b 4096 -C "your-email@example.com"
+
+    When prompted, press Enter to accept the default file location (usually ~/.ssh/id_rsa).
+    Enter a passphrase (optional but recommended).
+
+Add your SSH key to the SSH agent: Run the following command:
+
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa
+
+Add the SSH public key to GitHub:
+
+    Copy the contents of your public key:
+
+    cat ~/.ssh/id_rsa.pub
+
+    Go to GitHub > Settings > SSH and GPG keys.
+    Click New SSH key, paste the key, and give it a title.
+    Click Add SSH key.
+
+Test SSH connection: To ensure everything is set up correctly, run:
+
+    ssh -T git@github.com
+
+    You should see a message like: Hi username! You've successfully authenticated, but GitHub does not provide shell access.
+
+Confirming Your Identity in the Terminal
+
+After setting up authentication (either HTTPS with a PAT or SSH), you should be able to push and pull without issues. If it still asks for confirmation, make sure you have either:
+
+    The correct username and PAT for HTTPS.
+    The correct SSH key associated with your GitHub account.
+
+Let me know if you need help with any specific step!
